@@ -1,0 +1,387 @@
+:root {
+  --bg: #f8f0e2;
+  --surface: rgba(255, 252, 247, 0.92);
+  --ink: #2b2118;
+  --muted: #705b45;
+  --accent: #c96c39;
+  --accent-deep: #8f4321;
+  --accent-soft: #efc8aa;
+  --line: rgba(78, 47, 26, 0.15);
+  --success: #2f7d4d;
+  --shadow: 0 20px 40px rgba(78, 47, 26, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Zen Maru Gothic", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.5), transparent 32%),
+    linear-gradient(135deg, #f7eddc 0%, #f3d8ba 55%, #e9c49d 100%);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+.page-shell {
+  width: min(1260px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0 48px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+  margin-bottom: 24px;
+}
+
+.hero h1,
+.panel h2,
+.sub-panel h3 {
+  font-family: "Outfit", sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 4vw, 4.7rem);
+  line-height: 0.98;
+  margin: 8px 0 16px;
+}
+
+.eyebrow,
+.panel-label,
+.post-id-label {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+}
+
+.hero-copy {
+  max-width: 44rem;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.hero-card,
+.panel,
+.sub-panel,
+.status-card {
+  backdrop-filter: blur(12px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  border-radius: 24px;
+}
+
+.hero-card {
+  padding: 24px;
+  align-self: end;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 236, 0.96), rgba(245, 226, 201, 0.92));
+}
+
+.hero-card p,
+.hero-card ul {
+  margin: 0;
+}
+
+.hero-card ul {
+  padding-left: 20px;
+  margin-top: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 24px;
+}
+
+.panel {
+  padding: 24px;
+}
+
+.panel-header,
+.sub-panel-header,
+.post-header,
+.admin-post-item-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.panel-header h2,
+.sub-panel-header h3 {
+  margin: 6px 0 0;
+}
+
+.panel-actions,
+.auth-actions,
+.admin-post-actions,
+.reaction-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.search-area,
+.admin-form,
+.post-card,
+.post-footer,
+.sub-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.search-area {
+  margin: 20px 0 24px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field span,
+.field-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid rgba(78, 47, 26, 0.16);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+}
+
+input:focus,
+textarea:focus {
+  outline: 2px solid rgba(201, 108, 57, 0.18);
+  border-color: var(--accent);
+}
+
+.primary-button,
+.secondary-button,
+.tag-button,
+.admin-action,
+.reaction-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 11px 16px;
+  cursor: pointer;
+  transition: transform 0.18s ease, opacity 0.18s ease, background 0.18s ease;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #fff9f2;
+  font-weight: 700;
+}
+
+.secondary-button,
+.admin-action,
+.reaction-button {
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-weight: 700;
+}
+
+.primary-button:hover,
+.secondary-button:hover,
+.tag-button:hover,
+.admin-action:hover,
+.reaction-button:hover {
+  transform: translateY(-1px);
+}
+
+.hidden {
+  display: none;
+}
+
+.status-card,
+.helper-text,
+.post-date,
+#editingState,
+.log-meta,
+.empty-state {
+  color: var(--muted);
+}
+
+.status-card {
+  padding: 14px 16px;
+}
+
+.status-card.is-ready {
+  color: var(--success);
+  background: rgba(47, 125, 77, 0.1);
+  border-color: rgba(47, 125, 77, 0.18);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-button,
+.tag-chip {
+  background: rgba(201, 108, 57, 0.09);
+  color: var(--accent-deep);
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 108, 57, 0.14);
+  font-size: 0.9rem;
+}
+
+.tag-button.is-active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-deep));
+  color: #fff7ef;
+}
+
+.post-grid,
+.admin-post-list,
+.log-list {
+  display: grid;
+  gap: 18px;
+}
+
+.post-card {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(247, 236, 221, 0.82));
+}
+
+.post-id {
+  margin: 4px 0 0;
+  font-family: "Outfit", sans-serif;
+  font-size: 1.25rem;
+}
+
+.post-images {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.image-panel {
+  margin: 0;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid var(--line);
+}
+
+.image-panel figcaption {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.post-image {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f0ddcb, #e2b78d);
+}
+
+.reaction-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reaction-count {
+  display: inline-flex;
+  min-width: 1.8rem;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(143, 67, 33, 0.1);
+}
+
+.admin-form.locked {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.sub-panel {
+  padding: 18px;
+  margin-top: 18px;
+}
+
+.admin-post-item,
+.log-item {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.admin-action.danger {
+  background: rgba(143, 67, 33, 0.1);
+}
+
+.empty-state {
+  border: 1px dashed rgba(78, 47, 26, 0.2);
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+}
+
+@media (max-width: 980px) {
+  .hero,
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .page-shell {
+    width: min(100% - 20px, 100%);
+    padding-top: 20px;
+  }
+
+  .hero-card,
+  .panel,
+  .sub-panel {
+    border-radius: 18px;
+  }
+
+  .panel-header,
+  .sub-panel-header,
+  .post-header,
+  .admin-post-item-header {
+    display: grid;
+    align-items: start;
+  }
+
+  .post-images {
+    grid-template-columns: 1fr;
+  }
+}

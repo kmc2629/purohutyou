@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>プロフィール帳 画像管理アプリ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Outfit:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Profile Book Gallery</p>
+          <h1>表と裏、2枚で見せるプロフィール帳。</h1>
+          <p class="hero-copy">
+            管理ユーザは Google ログイン後に Cloudinary へ画像をアップロードし、一般ユーザは
+            Spreadsheet のタグとリアクション付きで画像投稿を閲覧できます。
+          </p>
+        </div>
+        <div class="hero-card">
+          <p>このMVPの構成</p>
+          <ul>
+            <li>投稿データ: 表画像URL / 裏画像URL / 投稿ID</li>
+            <li>画像保存: Cloudinary</li>
+            <li>タグ / リアクション: Google Spreadsheet 連携</li>
+            <li>管理認証: Firebase Google Auth</li>
+            <li>公開画面: 画像ギャラリー + 検索 + リアクション</li>
+          </ul>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel public-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-label">一般ユーザ</p>
+              <h2>プロフィール帳ギャラリー</h2>
+            </div>
+            <div class="panel-actions">
+              <button id="refreshSheetButton" class="secondary-button" type="button">
+                Spreadsheetを再読込
+              </button>
+              <button id="seedButton" class="secondary-button" type="button">
+                サンプル投稿を再投入
+              </button>
+            </div>
+          </div>
+
+          <div id="sheetStatus" class="status-card">
+            Spreadsheet からタグとリアクションを取得します。
+          </div>
+
+          <div class="search-area">
+            <label class="field">
+              <span>検索</span>
+              <input
+                id="searchInput"
+                type="search"
+                placeholder="投稿ID・タグで検索"
+              />
+            </label>
+            <div>
+              <span class="field-label">ハッシュタグ</span>
+              <div id="tagFilters" class="tag-list"></div>
+            </div>
+          </div>
+
+          <div id="postList" class="post-grid"></div>
+        </section>
+
+        <aside class="panel admin-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-label">管理ユーザ</p>
+              <h2>投稿ダッシュボード</h2>
+            </div>
+            <div class="auth-actions">
+              <button id="loginButton" class="primary-button" type="button">
+                Googleでログイン
+              </button>
+              <button id="logoutButton" class="secondary-button hidden" type="button">
+                ログアウト
+              </button>
+            </div>
+          </div>
+
+          <div id="authStatus" class="status-card">
+            Firebase 未設定の間は管理機能がロックされます。
+          </div>
+
+          <form id="postForm" class="admin-form locked">
+            <h3>プロフィール帳を投稿</h3>
+            <label class="field">
+              <span>投稿ID</span>
+              <input id="postIdInput" type="text" readonly />
+            </label>
+            <label class="field">
+              <span>管理メモ</span>
+              <input id="memoInput" type="text" placeholder="管理用のメモ。一般公開されません。" />
+            </label>
+            <label class="field">
+              <span>表画像</span>
+              <input id="frontImageInput" type="file" accept="image/*" />
+            </label>
+            <label class="field">
+              <span>裏画像</span>
+              <input id="backImageInput" type="file" accept="image/*" />
+            </label>
+            <p class="helper-text">
+              タグとリアクションは Spreadsheet 側で管理します。投稿時は投稿IDだけを基準に連携します。
+            </p>
+            <button id="saveButton" class="primary-button" type="submit">
+              Cloudinaryへアップロードして保存
+            </button>
+          </form>
+
+          <section class="sub-panel">
+            <div class="sub-panel-header">
+              <h3>投稿一覧</h3>
+              <p id="editingState">新規投稿モード</p>
+            </div>
+            <div id="adminPostList" class="admin-post-list"></div>
+          </section>
+
+          <section class="sub-panel">
+            <div class="sub-panel-header">
+              <h3>投稿 / 編集ログ</h3>
+            </div>
+            <div id="logList" class="log-list"></div>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <template id="postCardTemplate">
+      <article class="post-card">
+        <div class="post-header">
+          <div>
+            <p class="post-id-label">POST ID</p>
+            <h3 class="post-id"></h3>
+          </div>
+          <p class="post-date"></p>
+        </div>
+        <div class="post-images">
+          <figure class="image-panel">
+            <img class="post-image post-image-front" alt="" />
+            <figcaption>表</figcaption>
+          </figure>
+          <figure class="image-panel">
+            <img class="post-image post-image-back" alt="" />
+            <figcaption>裏</figcaption>
+          </figure>
+        </div>
+        <div class="post-footer">
+          <div class="tag-list post-tags"></div>
+          <div class="reaction-row">
+            <button class="reaction-button" type="button" data-reaction="like">いいね <span class="reaction-count">0</span></button>
+            <button class="reaction-button" type="button" data-reaction="cute">かわいい <span class="reaction-count">0</span></button>
+            <button class="reaction-button" type="button" data-reaction="want">見返したい <span class="reaction-count">0</span></button>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
