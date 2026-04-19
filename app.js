@@ -13,20 +13,20 @@ const STORAGE_KEYS = {
 };
 
 const firebaseConfig = {
-  apiKey: "YOUR_FIREBASE_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyA23BvxDUz1Zs3gLx14ryJceBRgplw5M2g",
+  authDomain: "purohutyoukannriapuri.firebaseapp.com",
+  projectId: "purohutyoukannriapuri",
+  appId: "1:744118297042:web:b75284f666aeff9f26e80b"
 };
 
 const cloudinaryConfig = {
-  cloudName: "YOUR_CLOUDINARY_CLOUD_NAME",
-  uploadPreset: "YOUR_UNSIGNED_UPLOAD_PRESET",
+  cloudName: "difcajxz5",
+  uploadPreset: "prohutyou",
   folder: "profile-book"
 };
 
 const spreadsheetConfig = {
-  endpointUrl: "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL"
+  endpointUrl: "https://script.google.com/macros/s/AKfycbwV6XbOMgSyiD_8OzsDo_XErVdkihVw6al5z_W77Zj8x8tk_T5hcwDtVsDqpK7L2JQm/exec"
 };
 
 const adminEmails = ["admin@example.com"];
